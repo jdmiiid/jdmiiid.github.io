@@ -1048,8 +1048,6 @@ section {
 /* PHONE VIDEO */
 
 .phone-video {
-  width: 100%; 
-  height: auto; 
   border-radius: 25px;
   border: #040b14;
   border-style: solid;

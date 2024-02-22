@@ -153,34 +153,40 @@
     })
   }
 
-  /**
-   * Porfolio isotope and filter
-   */
   window.addEventListener('load', () => {
-    let portfolioContainer = select('.portfolio-container');
-    if (portfolioContainer) {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: '.portfolio-item'
-      });
+    let portfolioFilters = document.querySelectorAll('#portfolio-flters li');
+    let videoElement = document.querySelector('.phone-video'); // Target the video element
 
-      let portfolioFilters = select('#portfolio-flters li', true);
+    // Define video sources for each filter option
+    const videoSources = {
+        '.homepage': 'assets/img/Jamtrackd_Footage/HomePage.mp4',
+        '.search': 'assets/img/Jamtrackd_Footage/Search.mp4',
+        '.profile': 'assets/img/Jamtrackd_Footage/Profile.mp4',
+        '.post': 'assets/img/Jamtrackd_Footage/Post.mp4'
+    };
 
-      on('click', '#portfolio-flters li', function(e) {
-        e.preventDefault();
-        portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
-        });
-        this.classList.add('filter-active');
+    portfolioFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
 
-        portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        portfolioIsotope.on('arrangeComplete', function() {
-          AOS.refresh()
-        });
-      }, true);
-    }
-  });
+            // Remove 'filter-active' class from all filters
+            portfolioFilters.forEach(f => {
+                f.classList.remove('filter-active');
+            });
+
+            // Add 'filter-active' class to the clicked filter
+            this.classList.add('filter-active');
+
+            // Get the video source based on the clicked filter
+            let videoSrc = videoSources[this.getAttribute('video-option')];
+            
+            // Update the video source
+            videoElement.src = videoSrc;
+            videoElement.load();
+        });        
+    });
+});
+
 
   /**
    * Initiate portfolio lightbox 
